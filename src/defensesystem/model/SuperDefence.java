@@ -8,6 +8,7 @@ package defensesystem.model;
  *
  * @author GLOBAL TRADINGS
  */
-public class SuperDefence {
+public class SuperDefence extends javax.swing.JFrame {
+    
     
 }
