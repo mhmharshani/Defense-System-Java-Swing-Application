@@ -4,21 +4,29 @@
  */
 package defensesystem.view;
 
+import defensesystem.controller.Observable;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author GLOBAL TRADINGS
  */
 public class MainController extends javax.swing.JFrame {
+    
+    private Observable observable;
 
     ImageIcon mainIcon = new ImageIcon("icon_main.png");
     /**
      * Creates new form MainController
      */
-    public MainController() {
+    public MainController(Observable observable) {
         initComponents();
         lblImage.setIcon(mainIcon);
+        this.observable = observable;
+        this.setVisible(true);
+        txtAreaDisplayMsgSent.setText("");
+        cmbUnitsMsg.setEnabled(false);
     }
 
     /**
@@ -53,6 +61,7 @@ public class MainController extends javax.swing.JFrame {
         lblMsgFromC = new javax.swing.JLabel();
         lblAnnouncements = new javax.swing.JLabel();
         lblMsgToC = new javax.swing.JLabel();
+        txtMsgSend = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Main Controller");
@@ -98,12 +107,22 @@ public class MainController extends javax.swing.JFrame {
         });
 
         chkAreaClear.setText("Area Clear");
+        chkAreaClear.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkAreaClearStateChanged(evt);
+            }
+        });
 
         txtAreaDisplayMsgSent.setColumns(20);
         txtAreaDisplayMsgSent.setRows(5);
         jScrollPane1.setViewportView(txtAreaDisplayMsgSent);
 
         chkSendPrivate.setText("Send Private");
+        chkSendPrivate.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkSendPrivateStateChanged(evt);
+            }
+        });
 
         cmbUnitsMsg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defence", "Helicoptor", "Tank", "Submarine" }));
 
@@ -164,27 +183,30 @@ public class MainController extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addComponent(sldPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblSoldier, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(lblAmmo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                                         .addComponent(lblFuel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblMsgToC, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(75, 75, 75)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtMsgSend)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnSend))
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cmbUnitsMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(chkSendPrivate))
-                                        .addGap(10, 10, 10))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(btnSend)
-                                        .addGap(40, 40, 40)))))
+                                            .addComponent(chkSendPrivate)
+                                            .addComponent(cmbUnitsMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(4, 4, 4))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(111, 111, 111)
+                                        .addComponent(lblMsgToC, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,24 +237,27 @@ public class MainController extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addComponent(chkSendPrivate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbUnitsMsg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSend))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblMsgToC)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbUnitsMsg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblSoldier)
                         .addGap(16, 16, 16)
                         .addComponent(lblFuel)
                         .addGap(15, 15, 15)
-                        .addComponent(lblAmmo)))
+                        .addComponent(lblAmmo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblMsgToC)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMsgSend)
+                    .addComponent(btnSend))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(sldPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
@@ -257,12 +282,43 @@ public class MainController extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbUnitsInfoActionPerformed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        // TODO add your handling code here:
+        String msgArea =msgArea = txtAreaDisplayMsgSent.getText()+"\n"+txtMsgSend.getText();;
+        if(chkSendPrivate.isSelected()){
+//            String x = String.valueOf(cmbUnitsMsg.getSelectedItem());
+              int index = cmbUnitsMsg.getSelectedIndex();
+              switch(index){
+                  case 1: txtAreaDisplayMsgSent.setText(msgArea+ "[Helicopter]");break;
+                  case 2: txtAreaDisplayMsgSent.setText(msgArea+ "[Tank]");break;
+                  case 3: txtAreaDisplayMsgSent.setText(msgArea+ "[Submarine]");break;
+                  case 0:
+                  default:JOptionPane.showMessageDialog(null, "Item Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+              }
+
+        }
+        else{
+            txtAreaDisplayMsgSent.setText(msgArea+"[All]");
+        }
+        
+        observable.notifyMsgRecieved();
+        txtMsgSend.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void btnCollectInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollectInfoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCollectInfoActionPerformed
+
+    private void chkAreaClearStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkAreaClearStateChanged
+        observable.notifyAreaClear(chkAreaClear.isSelected());
+    }//GEN-LAST:event_chkAreaClearStateChanged
+
+    private void chkSendPrivateStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkSendPrivateStateChanged
+        if(chkSendPrivate.isSelected()){
+            cmbUnitsMsg.setEnabled(true);
+        }
+        else{
+            cmbUnitsMsg.setEnabled(false);
+        }
+    }//GEN-LAST:event_chkSendPrivateStateChanged
 
     /**
      * @param args the command line arguments
@@ -292,11 +348,11 @@ public class MainController extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainController().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new MainController().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -323,5 +379,6 @@ public class MainController extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAreaDisplayAnnounce;
     private javax.swing.JTextArea txtAreaDisplayMsgRecieved;
     private javax.swing.JTextArea txtAreaDisplayMsgSent;
+    private javax.swing.JTextField txtMsgSend;
     // End of variables declaration//GEN-END:variables
 }

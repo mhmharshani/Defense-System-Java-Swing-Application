@@ -4,23 +4,30 @@
  */
 package defensesystem.view.defenseunits;
 
-import defensesystem.model.Observable;
 import defensesystem.model.SuperDefence;
 import javax.swing.ImageIcon;
+import defensesystem.model.Observer;
+import defensesystem.util.Strength;
+import defensesystem.view.MainController;
 
 /**
  *
  * @author GLOBAL TRADINGS
  */
-public class Helicopter extends SuperDefence implements Observable{
+public class Helicopter extends SuperDefence implements Observer{
+    private MainController mainController;
 
     ImageIcon helicopterIcon = new ImageIcon("icon_helicopter.png");
     /**
      * Creates new form Helicopter
      */
-    public Helicopter() {
+    public Helicopter(MainController mainController, int code) {
         initComponents();
-         lblImage.setIcon(helicopterIcon);
+        lblImage.setIcon(helicopterIcon);
+        this.mainController = mainController;
+        this.code = code;
+        
+        this.setVisible(true);
     }
 
     /**
@@ -204,40 +211,6 @@ public class Helicopter extends SuperDefence implements Observable{
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMissileActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Helicopter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Helicopter().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLaser;
@@ -258,4 +231,29 @@ public class Helicopter extends SuperDefence implements Observable{
     private javax.swing.JTextArea txtAreaDisplayMsg;
     private javax.swing.JTextField txtMessage;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Strength s) {
+        
+    }
+
+    @Override
+    public void updateMessageBox() {
+        
+    }
+
+    @Override
+    public void sendMessage() {
+        
+    }
+
+    @Override
+    public void sendStrength() {
+        
+    }
+
+    @Override
+    public void updateArea(boolean state) {
+        lblAreaClear.setText(state?"Area Cleared":"Area Not Cleared");
+    }
 }
