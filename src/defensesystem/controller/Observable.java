@@ -5,6 +5,7 @@
 package defensesystem.controller;
 
 import defensesystem.model.Observer;
+import defensesystem.model.SuperDefence;
 import defensesystem.util.Strength;
 import java.util.ArrayList;
 
@@ -47,12 +48,34 @@ public class Observable {
         }
     }
     
-    public void notifyMsgRecieved(){
+    public void notifyMsgRecieved(String msg, int index){
+//        String reciever="";
+//        switch(index){
+//            case 1:reciever="Helicopter";break;
+//            case 2:reciever="Tank";break;
+//            case 3:reciever="Submarine";break;
+//            case -1:reciever="All";break;
+//        }
         for(Observer ob:observerList){
-            ob.updateMessageBox();
+            SuperDefence sDefence=(SuperDefence)ob;
+            if(index!=-1){
+                if(sDefence.code==index){
+                    ob.updateMessageBox(msg);
+                }
+            }
+            else{
+                ob.updateMessageBox(msg);
+            }
+                        
         }
     }
- 
-    
+
+    public void notifyPosition(int value) {
+        for(Observer ob:observerList){
+            ob.updatePosition(value);
+        }
+    }
+
+       
     
 }

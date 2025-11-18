@@ -22,7 +22,9 @@ public class SuperDefence extends javax.swing.JFrame {
         this.energyLevel = energyLevel;
         this.soldierCount = soldierCount;
         this.ammoCount = ammoCount;
-    }  
+    } 
+    
+    
     
     
 }

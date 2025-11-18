@@ -221,6 +221,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Send"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSendActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSlider" name="sldEnergy">
       <Properties>
@@ -250,6 +253,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Position"/>
       </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="chkPositionStateChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRotate">
       <Properties>

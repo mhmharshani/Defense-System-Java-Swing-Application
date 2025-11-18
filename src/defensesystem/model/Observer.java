@@ -9,9 +9,11 @@ public interface Observer {
     
     public void updateArea(boolean state);
     
-    public void updateMessageBox();
+    public void updateMessageBox(String msg);
     
-    public void sendMessage();
+    public void sendMessage(String msg);
+    
+    public void updatePosition(int value);
     
     public void sendStrength();
     

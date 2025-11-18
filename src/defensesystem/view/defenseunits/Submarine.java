@@ -28,6 +28,12 @@ public class Submarine extends SuperDefence implements Observer{
         lblImage.setIcon(submarineIcon);
         this.code = code;
         this.mainController = mainController;
+        txtAreaDisplayMsg.setEditable(false);
+        
+        btnShoot.setEnabled(false);
+        btnSonar.setEnabled(false);
+        btnTomahawk.setEnabled(false);
+        btnTrident.setEnabled(false);
         
         this.setVisible(true);
     }
@@ -114,6 +120,11 @@ public class Submarine extends SuperDefence implements Observer{
         jScrollPane1.setViewportView(txtAreaDisplayMsg);
 
         btnSend.setText("Send");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         sldOxygen.setMajorTickSpacing(20);
         sldOxygen.setMinorTickSpacing(10);
@@ -127,6 +138,11 @@ public class Submarine extends SuperDefence implements Observer{
         lblAmmo.setText("Ammo Count");
 
         chkPosition.setText("Position");
+        chkPosition.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkPositionStateChanged(evt);
+            }
+        });
 
         btnTrident.setText("Trident-2 Missile");
 
@@ -236,7 +252,8 @@ public class Submarine extends SuperDefence implements Observer{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
+    
     private void btnShootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShootActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnShootActionPerformed
@@ -244,6 +261,17 @@ public class Submarine extends SuperDefence implements Observer{
     private void btnSonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSonarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSonarActionPerformed
+
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        String newMsg = txtMessage.getText();
+        txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMe : "+newMsg);
+        
+        sendMessage(newMsg);
+    }//GEN-LAST:event_btnSendActionPerformed
+
+    private void chkPositionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkPositionStateChanged
+        updatePosition(mainController.sendStrength());
+    }//GEN-LAST:event_chkPositionStateChanged
 
     /**
      * @param args the command line arguments
@@ -311,13 +339,13 @@ public class Submarine extends SuperDefence implements Observer{
     }
 
     @Override
-    public void updateMessageBox() {
-        
+    public void updateMessageBox(String msg) {
+       txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMain Controller : "+msg);
     }
 
     @Override
-    public void sendMessage() {
-        
+    public void sendMessage(String msg) {
+        mainController.recieveMsg(msg, "Submarine");
     }
 
     @Override
@@ -328,5 +356,42 @@ public class Submarine extends SuperDefence implements Observer{
     @Override
     public void updateArea(boolean state) {
         lblAreaClear.setText(state?"Area Cleared":"Area Not Cleared");
+    }
+
+    @Override
+    public void updatePosition(int value) {
+        if(chkPosition.isSelected()){
+            if(value>=Strength.CLOSED.getInitStrength()&&value<=Strength.LOW.getUpperLimit()){
+                btnShoot.setEnabled(true);
+                btnSonar.setEnabled(false);
+                btnTomahawk.setEnabled(false);
+                btnTrident.setEnabled(false);
+            }
+            else if(value>=Strength.MEDIUM.getLowerLimit()&&value<=Strength.MEDIUM.getUpperLimit()){
+                btnShoot.setEnabled(true);
+                btnSonar.setEnabled(true);
+                btnTomahawk.setEnabled(false);
+                btnTrident.setEnabled(false);
+            }
+            else if(value>=Strength.HIGH.getLowerLimit()&&value<=Strength.HIGH.getUpperLimit()){
+                btnShoot.setEnabled(true);
+                btnSonar.setEnabled(true);
+                btnTomahawk.setEnabled(true);
+                btnTrident.setEnabled(false);
+            }
+            else if(value>=Strength.STRONG.getLowerLimit()&&value<=Strength.STRONG.getUpperLimit()){
+                btnShoot.setEnabled(true);
+                btnSonar.setEnabled(true);
+                btnTomahawk.setEnabled(true);
+                btnTrident.setEnabled(true);
+            }
+            
+        }
+        else{
+            btnShoot.setEnabled(false);
+            btnSonar.setEnabled(false);
+            btnTomahawk.setEnabled(false);
+            btnTrident.setEnabled(false);
+        }
     }
 }

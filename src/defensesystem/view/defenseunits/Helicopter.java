@@ -26,6 +26,11 @@ public class Helicopter extends SuperDefence implements Observer{
         lblImage.setIcon(helicopterIcon);
         this.mainController = mainController;
         this.code = code;
+        txtAreaDisplayMsg.setEditable(false);
+        
+        btnShoot.setEnabled(false);
+        btnMissile.setEnabled(false);
+        btnLaser.setEnabled(false);
         
         this.setVisible(true);
     }
@@ -109,6 +114,11 @@ public class Helicopter extends SuperDefence implements Observer{
         jScrollPane1.setViewportView(txtAreaDisplayMsg);
 
         btnSend.setText("Send");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         sldEnergy.setMajorTickSpacing(20);
         sldEnergy.setMinorTickSpacing(10);
@@ -122,6 +132,11 @@ public class Helicopter extends SuperDefence implements Observer{
         lblAmmo.setText("Ammo Count");
 
         chkPosition.setText("Position");
+        chkPosition.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkPositionStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,6 +226,17 @@ public class Helicopter extends SuperDefence implements Observer{
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMissileActionPerformed
 
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        String newMsg = txtMessage.getText();
+        txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMe : "+newMsg);
+        
+        sendMessage(newMsg);
+    }//GEN-LAST:event_btnSendActionPerformed
+
+    private void chkPositionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkPositionStateChanged
+        updatePosition(mainController.sendStrength());
+    }//GEN-LAST:event_chkPositionStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLaser;
@@ -238,13 +264,13 @@ public class Helicopter extends SuperDefence implements Observer{
     }
 
     @Override
-    public void updateMessageBox() {
-        
+    public void updateMessageBox(String msg) {
+        txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMain Controller : "+msg);
     }
 
     @Override
-    public void sendMessage() {
-        
+    public void sendMessage(String msg ) {
+        mainController.recieveMsg(msg, "Helicopter");
     }
 
     @Override
@@ -255,5 +281,32 @@ public class Helicopter extends SuperDefence implements Observer{
     @Override
     public void updateArea(boolean state) {
         lblAreaClear.setText(state?"Area Cleared":"Area Not Cleared");
+    }
+
+    @Override
+    public void updatePosition(int value) {
+        if(chkPosition.isSelected()){
+            if(value>=Strength.CLOSED.getInitStrength()&&value<=Strength.LOW.getUpperLimit()){
+                btnShoot.setEnabled(true);
+                btnMissile.setEnabled(false);
+                btnLaser.setEnabled(false);
+            }
+            else if(value>=Strength.MEDIUM.getLowerLimit()&&value<=Strength.HIGH.getUpperLimit()){
+                btnShoot.setEnabled(true);
+                btnMissile.setEnabled(true);
+                btnLaser.setEnabled(false);
+            }
+            else if(value>=Strength.STRONG.getLowerLimit()&&value<=Strength.STRONG.getUpperLimit()){
+                btnShoot.setEnabled(true);
+                btnMissile.setEnabled(true);
+                btnLaser.setEnabled(true);
+            }
+            
+        }
+        else{
+            btnShoot.setEnabled(false);
+            btnMissile.setEnabled(false);
+            btnLaser.setEnabled(false);
+        }
     }
 }

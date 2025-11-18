@@ -13,8 +13,8 @@ public class Starter {
         Observable ob = new Observable();
         MainController mainController = new MainController(ob);
         ob.addObserver(new Helicopter(mainController,1));
-        ob.addObserver(new Submarine(mainController,2));
-        ob.addObserver(new Tank(mainController,3));
+        ob.addObserver(new Tank(mainController,2));
+        ob.addObserver(new Submarine(mainController,3));
 //        ob.setStrength(0);
     }
     

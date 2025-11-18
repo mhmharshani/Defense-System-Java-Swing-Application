@@ -27,6 +27,9 @@ public class MainController extends javax.swing.JFrame {
         this.setVisible(true);
         txtAreaDisplayMsgSent.setText("");
         cmbUnitsMsg.setEnabled(false);
+        txtAreaDisplayAnnounce.setEditable(false);
+        txtAreaDisplayMsgRecieved.setEditable(false);
+        txtAreaDisplayMsgSent.setEditable(false);
     }
 
     /**
@@ -132,6 +135,11 @@ public class MainController extends javax.swing.JFrame {
         sldPosition.setPaintTicks(true);
         sldPosition.setSnapToTicks(true);
         sldPosition.setValue(0);
+        sldPosition.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sldPositionStateChanged(evt);
+            }
+        });
 
         btnSend.setText("Send");
         btnSend.addActionListener(new java.awt.event.ActionListener() {
@@ -257,13 +265,11 @@ public class MainController extends javax.swing.JFrame {
                     .addComponent(btnSend))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sldPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
+                    .addComponent(sldPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(lblPosition)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblPosition)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAnnouncements)
                     .addComponent(lblMsgFromC))
@@ -282,10 +288,12 @@ public class MainController extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbUnitsInfoActionPerformed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        String msgArea =msgArea = txtAreaDisplayMsgSent.getText()+"\n"+txtMsgSend.getText();;
+        String newMsg = txtMsgSend.getText();
+        String msgArea =msgArea = txtAreaDisplayMsgSent.getText()+"\n"+newMsg;
+        int index = -1;
         if(chkSendPrivate.isSelected()){
 //            String x = String.valueOf(cmbUnitsMsg.getSelectedItem());
-              int index = cmbUnitsMsg.getSelectedIndex();
+              index = cmbUnitsMsg.getSelectedIndex();
               switch(index){
                   case 1: txtAreaDisplayMsgSent.setText(msgArea+ "[Helicopter]");break;
                   case 2: txtAreaDisplayMsgSent.setText(msgArea+ "[Tank]");break;
@@ -298,8 +306,9 @@ public class MainController extends javax.swing.JFrame {
         else{
             txtAreaDisplayMsgSent.setText(msgArea+"[All]");
         }
-        
-        observable.notifyMsgRecieved();
+        if(index!=0){
+            observable.notifyMsgRecieved(newMsg,index);
+        }
         txtMsgSend.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
@@ -314,46 +323,52 @@ public class MainController extends javax.swing.JFrame {
     private void chkSendPrivateStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkSendPrivateStateChanged
         if(chkSendPrivate.isSelected()){
             cmbUnitsMsg.setEnabled(true);
+            cmbUnitsMsg.setSelectedIndex(0);
         }
         else{
             cmbUnitsMsg.setEnabled(false);
         }
     }//GEN-LAST:event_chkSendPrivateStateChanged
 
+    private void sldPositionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldPositionStateChanged
+
+        observable.notifyPosition(sldPosition.getValue());
+    }//GEN-LAST:event_sldPositionStateChanged
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new MainController().setVisible(true);
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
 //            }
-//        });
-    }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+////        java.awt.EventQueue.invokeLater(new Runnable() {
+////            public void run() {
+////                new MainController().setVisible(true);
+////            }
+////        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCollectInfo;
@@ -381,4 +396,14 @@ public class MainController extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAreaDisplayMsgSent;
     private javax.swing.JTextField txtMsgSend;
     // End of variables declaration//GEN-END:variables
+
+
+    public void recieveMsg(String msg, String name){
+        txtAreaDisplayMsgRecieved.setText(txtAreaDisplayMsgRecieved.getText()+"\n"+name+" : "+msg);
+    }
+    
+    public int sendStrength(){
+        return sldPosition.getValue();
+    }
+
 }
