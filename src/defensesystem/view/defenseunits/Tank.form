@@ -224,6 +224,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Radar Operation"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRadarActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -286,6 +289,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Rotate Shooting"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRotateActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblEnergy">
       <Properties>

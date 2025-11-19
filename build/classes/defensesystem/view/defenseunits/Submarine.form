@@ -231,6 +231,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Tomahawk Missile"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTomahawkActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -293,6 +296,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Trident-2 Missile"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTridentActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSlider" name="sldEnergy">
       <Properties>

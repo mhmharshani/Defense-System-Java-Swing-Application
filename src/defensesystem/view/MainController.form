@@ -51,8 +51,13 @@
                                       <Component id="lblFuel" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblFCount" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblACount" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Group type="102" attributes="0">
@@ -69,8 +74,9 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblSCount" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
                                       <Component id="lblMsgToC" min="-2" pref="151" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -125,11 +131,20 @@
                       <Component id="cmbUnitsMsg" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblSoldier" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblSoldier" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSCount" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Component id="lblFuel" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblFuel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFCount" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Component id="lblAmmo" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblAmmo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblACount" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblMsgToC" min="-2" max="-2" attributes="0"/>
@@ -214,7 +229,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
             <StringItem index="0" value="Select Defence"/>
-            <StringItem index="1" value="Helicoptor"/>
+            <StringItem index="1" value="Helicopter"/>
             <StringItem index="2" value="Tank"/>
             <StringItem index="3" value="Submarine"/>
           </StringArray>
@@ -268,7 +283,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
             <StringItem index="0" value="Select Defence"/>
-            <StringItem index="1" value="Helicoptor"/>
+            <StringItem index="1" value="Helicopter"/>
             <StringItem index="2" value="Tank"/>
             <StringItem index="3" value="Submarine"/>
           </StringArray>
@@ -359,6 +374,12 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtMsgSend">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblSCount">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFCount">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblACount">
     </Component>
   </SubComponents>
 </Form>

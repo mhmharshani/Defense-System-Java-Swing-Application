@@ -65,6 +65,9 @@ public class MainController extends javax.swing.JFrame {
         lblAnnouncements = new javax.swing.JLabel();
         lblMsgToC = new javax.swing.JLabel();
         txtMsgSend = new javax.swing.JTextField();
+        lblSCount = new javax.swing.JLabel();
+        lblFCount = new javax.swing.JLabel();
+        lblACount = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Main Controller");
@@ -95,7 +98,7 @@ public class MainController extends javax.swing.JFrame {
                     .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        cmbUnitsInfo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defence", "Helicoptor", "Tank", "Submarine" }));
+        cmbUnitsInfo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defence", "Helicopter", "Tank", "Submarine" }));
         cmbUnitsInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbUnitsInfoActionPerformed(evt);
@@ -127,7 +130,7 @@ public class MainController extends javax.swing.JFrame {
             }
         });
 
-        cmbUnitsMsg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defence", "Helicoptor", "Tank", "Submarine" }));
+        cmbUnitsMsg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Defence", "Helicopter", "Tank", "Submarine" }));
 
         sldPosition.setMajorTickSpacing(20);
         sldPosition.setMinorTickSpacing(10);
@@ -197,8 +200,12 @@ public class MainController extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(lblAmmo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                                         .addComponent(lblFuel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblFCount)
+                                            .addComponent(lblACount))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addGroup(layout.createSequentialGroup()
@@ -212,7 +219,8 @@ public class MainController extends javax.swing.JFrame {
                                             .addComponent(cmbUnitsMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(4, 4, 4))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(111, 111, 111)
+                                        .addComponent(lblSCount)
+                                        .addGap(105, 105, 105)
                                         .addComponent(lblMsgToC, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))))
                         .addContainerGap())
@@ -250,11 +258,17 @@ public class MainController extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbUnitsMsg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblSoldier)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblSoldier)
+                            .addComponent(lblSCount))
                         .addGap(16, 16, 16)
-                        .addComponent(lblFuel)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFuel)
+                            .addComponent(lblFCount))
                         .addGap(15, 15, 15)
-                        .addComponent(lblAmmo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblAmmo)
+                            .addComponent(lblACount)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblMsgToC)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -313,7 +327,11 @@ public class MainController extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void btnCollectInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollectInfoActionPerformed
-        // TODO add your handling code here:
+        int index = cmbUnitsInfo.getSelectedIndex();
+        int[] countArray = observable.notifyObserversToSendCount(index);
+        lblSCount.setText(""+countArray[0]);
+        lblFCount.setText(""+countArray[1]);
+        lblACount.setText(""+countArray[2]);
     }//GEN-LAST:event_btnCollectInfoActionPerformed
 
     private void chkAreaClearStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkAreaClearStateChanged
@@ -331,8 +349,13 @@ public class MainController extends javax.swing.JFrame {
     }//GEN-LAST:event_chkSendPrivateStateChanged
 
     private void sldPositionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldPositionStateChanged
-
-        observable.notifyPosition(sldPosition.getValue());
+        if(chkAreaClear.isSelected()){
+            observable.notifyPosition(sldPosition.getValue());
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Area is not clear yet.Wait untill area get cleared.", "Error", JOptionPane.ERROR_MESSAGE);
+            
+        }
     }//GEN-LAST:event_sldPositionStateChanged
 
     /**
@@ -381,13 +404,16 @@ public class MainController extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblACount;
     private javax.swing.JLabel lblAmmo;
     private javax.swing.JLabel lblAnnouncements;
+    private javax.swing.JLabel lblFCount;
     private javax.swing.JLabel lblFuel;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblMsgFromC;
     private javax.swing.JLabel lblMsgToC;
     private javax.swing.JLabel lblPosition;
+    private javax.swing.JLabel lblSCount;
     private javax.swing.JLabel lblSoldier;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JSlider sldPosition;

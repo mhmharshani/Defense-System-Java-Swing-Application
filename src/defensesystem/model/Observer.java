@@ -17,4 +17,6 @@ public interface Observer {
     
     public void sendStrength();
     
+    public int[] updateCount();
+    
 }

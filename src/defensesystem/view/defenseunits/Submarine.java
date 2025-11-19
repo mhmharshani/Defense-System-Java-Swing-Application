@@ -25,8 +25,8 @@ public class Submarine extends SuperDefence implements Observer{
     private Timer timerEnergy;
     private Timer timerOxygen;
     private final int sldTLimit = 30;
-    private final int INTERVAL_ENERGY = 1000; //in miliseconds
-    private final int INTERVAL_OXYGEN = 500; //in miliseconds
+    private final int INTERVAL_ENERGY = 10000; //in miliseconds
+    private final int INTERVAL_OXYGEN = 5000; //in miliseconds
     
     private ImageIcon submarineIcon = new ImageIcon("icon_submarine.png");
     /**
@@ -138,6 +138,11 @@ public class Submarine extends SuperDefence implements Observer{
         });
 
         btnTomahawk.setText("Tomahawk Missile");
+        btnTomahawk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTomahawkActionPerformed(evt);
+            }
+        });
 
         txtAreaDisplayMsg.setColumns(20);
         txtAreaDisplayMsg.setRows(5);
@@ -169,6 +174,11 @@ public class Submarine extends SuperDefence implements Observer{
         });
 
         btnTrident.setText("Trident-2 Missile");
+        btnTrident.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTridentActionPerformed(evt);
+            }
+        });
 
         sldEnergy.setMajorTickSpacing(20);
         sldEnergy.setMinorTickSpacing(10);
@@ -298,11 +308,13 @@ public class Submarine extends SuperDefence implements Observer{
    
     
     private void btnShootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShootActionPerformed
-        // TODO add your handling code here:
+        spAmmo.setValue((int)spAmmo.getValue()-1);
+        spSoldier.setValue((int)spSoldier.getValue()-1);
     }//GEN-LAST:event_btnShootActionPerformed
 
     private void btnSonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSonarActionPerformed
-        // TODO add your handling code here:
+        spAmmo.setValue((int)spAmmo.getValue()-5);
+        spSoldier.setValue((int)spSoldier.getValue()-2);// TODO add your handling code here:
     }//GEN-LAST:event_btnSonarActionPerformed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
@@ -320,6 +332,16 @@ public class Submarine extends SuperDefence implements Observer{
         sldEnergy.setValue(100);
         timerEnergy.start();
     }//GEN-LAST:event_btnRechargeActionPerformed
+
+    private void btnTomahawkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomahawkActionPerformed
+        spAmmo.setValue((int)spAmmo.getValue()-15);
+        spSoldier.setValue((int)spSoldier.getValue()-2);
+    }//GEN-LAST:event_btnTomahawkActionPerformed
+
+    private void btnTridentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTridentActionPerformed
+        spAmmo.setValue((int)spAmmo.getValue()-20);
+        spSoldier.setValue((int)spSoldier.getValue()-2);
+    }//GEN-LAST:event_btnTridentActionPerformed
 
     ActionListener timerListener = new ActionListener(){
         @Override
@@ -444,7 +466,7 @@ public class Submarine extends SuperDefence implements Observer{
     @Override
     public void updatePosition(int value) {
         if(chkPosition.isSelected()){
-            if(value>=Strength.CLOSED.getInitStrength()&&value<=Strength.LOW.getUpperLimit()){
+            if(value>=Strength.LOW.getLowerLimit()&&value<=Strength.LOW.getUpperLimit()){
                 btnShoot.setEnabled(true);
                 btnSonar.setEnabled(false);
                 btnTomahawk.setEnabled(false);
@@ -476,5 +498,10 @@ public class Submarine extends SuperDefence implements Observer{
             btnTomahawk.setEnabled(false);
             btnTrident.setEnabled(false);
         }
+    }
+
+    @Override
+    public int[] updateCount() {
+        return new int[]{(int)spSoldier.getValue(),sldEnergy.getValue(),(int)spAmmo.getValue()};
     }
 }

@@ -24,7 +24,8 @@ public class Helicopter extends SuperDefence implements Observer{
     private ImageIcon helicopterIcon = new ImageIcon("icon_helicopter.png");
     private Timer timer;
     private final int sldTLimit = 30;
-    private final int INTERVAL = 1500; //in miliseconds
+    private final int INTERVAL = 15000; //in miliseconds
+    
     /**
      * Creates new form Helicopter
      */
@@ -126,6 +127,11 @@ public class Helicopter extends SuperDefence implements Observer{
         });
 
         btnLaser.setText("Laser Operation");
+        btnLaser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaserActionPerformed(evt);
+            }
+        });
 
         txtAreaDisplayMsg.setColumns(20);
         txtAreaDisplayMsg.setRows(5);
@@ -258,11 +264,13 @@ public class Helicopter extends SuperDefence implements Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnShootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShootActionPerformed
-        // TODO add your handling code here:
+        spAmmo.setValue((int)spAmmo.getValue()-1);
+        spSoldier.setValue((int)spSoldier.getValue()-1);
     }//GEN-LAST:event_btnShootActionPerformed
 
     private void btnMissileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMissileActionPerformed
-        // TODO add your handling code here:
+        spAmmo.setValue((int)spAmmo.getValue()-5);
+        spSoldier.setValue((int)spSoldier.getValue()-2);
     }//GEN-LAST:event_btnMissileActionPerformed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
@@ -281,6 +289,11 @@ public class Helicopter extends SuperDefence implements Observer{
         timer.start();
     }//GEN-LAST:event_btnRechargeActionPerformed
 
+    private void btnLaserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaserActionPerformed
+        spAmmo.setValue((int)spAmmo.getValue()-10);
+        spSoldier.setValue((int)spSoldier.getValue()-1);
+    }//GEN-LAST:event_btnLaserActionPerformed
+
     ActionListener timerListener = new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -290,7 +303,7 @@ public class Helicopter extends SuperDefence implements Observer{
             }
             else{
                 timer.stop();
-                JOptionPane.showMessageDialog(null, "Energy is running out. Please press the RECHARGE button.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Energy is running out in Helicopter. Please press the RECHARGE button.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         
@@ -346,7 +359,7 @@ public class Helicopter extends SuperDefence implements Observer{
     @Override
     public void updatePosition(int value) {
         if(chkPosition.isSelected()){
-            if(value>=Strength.CLOSED.getInitStrength()&&value<=Strength.LOW.getUpperLimit()){
+            if(value>=Strength.LOW.getLowerLimit()&&value<=Strength.LOW.getUpperLimit()){
                 btnShoot.setEnabled(true);
                 btnMissile.setEnabled(false);
                 btnLaser.setEnabled(false);
@@ -369,4 +382,11 @@ public class Helicopter extends SuperDefence implements Observer{
             btnLaser.setEnabled(false);
         }
     }
+
+    @Override
+    public int[] updateCount() {
+        return new int[]{(int)spSoldier.getValue(),sldEnergy.getValue(),(int)spAmmo.getValue()};
+    }
+    
+    
 }

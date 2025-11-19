@@ -76,6 +76,18 @@ public class Observable {
         }
     }
 
-       
+    public int[] notifyObserversToSendCount(int index){
+        int[] countArray = new int[3];
+        for(Observer ob:observerList){
+            SuperDefence sDefence=(SuperDefence)ob;
+            if(index!=0){
+                if(sDefence.code==index){
+                    countArray = ob.updateCount();
+                }
+            }
+                                   
+        }
+        return countArray;
+    }   
     
 }
