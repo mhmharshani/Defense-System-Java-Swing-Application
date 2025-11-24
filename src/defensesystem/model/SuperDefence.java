@@ -1,13 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package defensesystem.model;
 
-/**
- *
- * @author GLOBAL TRADINGS
- */
-public class SuperDefence {
+public class SuperDefence extends javax.swing.JFrame {
+    
+    public int code;
+    public int energyLevel;
+    public int soldierCount;
+    public int ammoCount;
+
+    public SuperDefence(){
+    }
+
+    public SuperDefence(int code){
+        this.code = code;
+    }
+
+    public SuperDefence(int code, int energyLevel, int soldierCount, int ammoCount){
+        this.code = code;
+        this.energyLevel = energyLevel;
+        this.soldierCount = soldierCount;
+        this.ammoCount = ammoCount;
+    }   
     
 }
