@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package defensesystem.view.defenseunits;
 
 import defensesystem.model.SuperDefence;
@@ -14,10 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-/**
- *
- * @author GLOBAL TRADINGS
- */
 public class Helicopter extends SuperDefence implements Observer{
     private MainController mainController;
 
@@ -26,9 +19,6 @@ public class Helicopter extends SuperDefence implements Observer{
     private final int sldTLimit = 30;
     private final int INTERVAL = 15000; //in miliseconds
     
-    /**
-     * Creates new form Helicopter
-     */
     public Helicopter(MainController mainController, int code) {
         initComponents();
         lblImage.setIcon(helicopterIcon);
@@ -278,6 +268,7 @@ public class Helicopter extends SuperDefence implements Observer{
         txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMe : "+newMsg);
         
         sendMessage(newMsg);
+        txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void chkPositionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkPositionStateChanged
@@ -332,11 +323,6 @@ public class Helicopter extends SuperDefence implements Observer{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void update(Strength s) {
-        
-    }
-
-    @Override
     public void updateMessageBox(String msg) {
         txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMain Controller : "+msg);
     }
@@ -344,11 +330,6 @@ public class Helicopter extends SuperDefence implements Observer{
     @Override
     public void sendMessage(String msg ) {
         mainController.recieveMsg(msg, "Helicopter");
-    }
-
-    @Override
-    public void sendStrength() {
-        
     }
 
     @Override

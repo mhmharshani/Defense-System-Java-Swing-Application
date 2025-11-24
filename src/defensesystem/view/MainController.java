@@ -1,25 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package defensesystem.view;
 
 import defensesystem.controller.Observable;
+import defensesystem.util.Strength;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
-/**
- *
- * @author GLOBAL TRADINGS
- */
+
 public class MainController extends javax.swing.JFrame {
     
     private Observable observable;
 
     ImageIcon mainIcon = new ImageIcon("icon_main.png");
-    /**
-     * Creates new form MainController
-     */
+    
     public MainController(Observable observable) {
         initComponents();
         lblImage.setIcon(mainIcon);
@@ -30,6 +28,9 @@ public class MainController extends javax.swing.JFrame {
         txtAreaDisplayAnnounce.setEditable(false);
         txtAreaDisplayMsgRecieved.setEditable(false);
         txtAreaDisplayMsgSent.setEditable(false);
+        
+        ShowTime();
+        
     }
 
     /**
@@ -336,6 +337,9 @@ public class MainController extends javax.swing.JFrame {
 
     private void chkAreaClearStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkAreaClearStateChanged
         observable.notifyAreaClear(chkAreaClear.isSelected());
+        if(!chkAreaClear.isSelected()){
+            sldPosition.setValue(Strength.CLOSED.getInitStrength());
+        }
     }//GEN-LAST:event_chkAreaClearStateChanged
 
     private void chkSendPrivateStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkSendPrivateStateChanged
@@ -353,46 +357,11 @@ public class MainController extends javax.swing.JFrame {
             observable.notifyPosition(sldPosition.getValue());
         }
         else{
-            JOptionPane.showMessageDialog(null, "Area is not clear yet.Wait untill area get cleared.", "Error", JOptionPane.ERROR_MESSAGE);
-            
+            JOptionPane.showMessageDialog(null, "Area is not clear yet. Wait untill area get cleared.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_sldPositionStateChanged
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(MainController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-////        java.awt.EventQueue.invokeLater(new Runnable() {
-////            public void run() {
-////                new MainController().setVisible(true);
-////            }
-////        });
-//    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCollectInfo;
     private javax.swing.JButton btnSend;
@@ -431,5 +400,16 @@ public class MainController extends javax.swing.JFrame {
     public int sendStrength(){
         return sldPosition.getValue();
     }
-
+    
+     public void ShowTime() {
+        new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date d = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyy hh:mm:ss a");
+                txtAreaDisplayAnnounce.setText(s.format(d));                
+            }
+        }).start();
+    }
+     
 }

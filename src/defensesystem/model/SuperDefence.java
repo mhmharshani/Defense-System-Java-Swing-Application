@@ -1,8 +1,6 @@
 
 package defensesystem.model;
 
-import java.awt.HeadlessException;
-
 public class SuperDefence extends javax.swing.JFrame {
     
     public int code;
@@ -22,9 +20,6 @@ public class SuperDefence extends javax.swing.JFrame {
         this.energyLevel = energyLevel;
         this.soldierCount = soldierCount;
         this.ammoCount = ammoCount;
-    } 
-    
-    
-    
+    }   
     
 }

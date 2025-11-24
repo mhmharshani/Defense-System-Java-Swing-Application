@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package defensesystem.view.defenseunits;
 
 import defensesystem.model.SuperDefence;
@@ -14,10 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-/**
- *
- * @author GLOBAL TRADINGS
- */
 public class Submarine extends SuperDefence implements Observer{
     
     private int oxygenLevel;
@@ -29,9 +22,7 @@ public class Submarine extends SuperDefence implements Observer{
     private final int INTERVAL_OXYGEN = 5000; //in miliseconds
     
     private ImageIcon submarineIcon = new ImageIcon("icon_submarine.png");
-    /**
-     * Creates new form Helicopter
-     */
+    
     public Submarine(MainController mainController, int code) {
         initComponents();
         lblImage.setIcon(submarineIcon);
@@ -207,6 +198,7 @@ public class Submarine extends SuperDefence implements Observer{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,22 +224,20 @@ public class Submarine extends SuperDefence implements Observer{
                                                 .addGap(18, 18, 18)
                                                 .addComponent(spSoldier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addComponent(lblAreaClear))
+                                .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lblEnergy)
                                         .addGap(18, 18, 18)
                                         .addComponent(lblOxygen))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(sldEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(13, 13, 13)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(sldOxygen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnRecharge)
                                 .addGap(52, 52, 52)))
-                        .addGap(16, 16, 16))
+                        .addGap(29, 29, 29))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -319,9 +309,9 @@ public class Submarine extends SuperDefence implements Observer{
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         String newMsg = txtMessage.getText();
-        txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMe : "+newMsg);
-        
+        txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMe : "+newMsg);     
         sendMessage(newMsg);
+        txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void chkPositionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkPositionStateChanged
@@ -377,41 +367,7 @@ public class Submarine extends SuperDefence implements Observer{
         
     };
     
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Submarine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Submarine(mainController,code).setVisible(true);
-//            }
-//        });
-//    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRecharge;
@@ -439,11 +395,6 @@ public class Submarine extends SuperDefence implements Observer{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void update(Strength s) {
-        
-    }
-
-    @Override
     public void updateMessageBox(String msg) {
        txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMain Controller : "+msg);
     }
@@ -451,11 +402,6 @@ public class Submarine extends SuperDefence implements Observer{
     @Override
     public void sendMessage(String msg) {
         mainController.recieveMsg(msg, "Submarine");
-    }
-
-    @Override
-    public void sendStrength() {
-        
     }
 
     @Override

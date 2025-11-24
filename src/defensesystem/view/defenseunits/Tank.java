@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package defensesystem.view.defenseunits;
 
 import defensesystem.model.SuperDefence;
@@ -14,10 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-/**
- *
- * @author GLOBAL TRADINGS
- */
 public class Tank extends SuperDefence implements Observer{
     private MainController mainController;
     
@@ -25,9 +18,7 @@ public class Tank extends SuperDefence implements Observer{
     private Timer timer;
     private final int sldTLimit = 30;
     private final int INTERVAL = 20000; //in miliseconds
-    /**
-     * Creates new form Helicopter
-     */
+    
     public Tank(MainController mainController,int code) {
         initComponents();
         lblImage.setIcon(tankIcon);
@@ -297,6 +288,7 @@ public class Tank extends SuperDefence implements Observer{
         txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMe : "+newMsg);
         
         sendMessage(newMsg);
+        txtMessage.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void chkPositionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkPositionStateChanged
@@ -333,42 +325,7 @@ public class Tank extends SuperDefence implements Observer{
         
     };
     
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Tank.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Tank().setVisible(true);
-//            }
-//        });
-//    }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMissile;
     private javax.swing.JButton btnRadar;
@@ -393,11 +350,6 @@ public class Tank extends SuperDefence implements Observer{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void update(Strength s) {
-        
-    }
-
-    @Override
     public void updateMessageBox(String msg) {
         txtAreaDisplayMsg.setText(txtAreaDisplayMsg.getText()+"\nMain Controller : "+msg);
     }
@@ -410,11 +362,6 @@ public class Tank extends SuperDefence implements Observer{
     @Override
     public void updateArea(boolean state) {
         lblAreaClear.setText(state?"Area Cleared":"Area Not Cleared");
-    }
-
-    @Override
-    public void sendStrength() {
-        
     }
 
     @Override
